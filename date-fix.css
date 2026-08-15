@@ -1,0 +1,18 @@
+/* Ajuste de leitura para os blocos de data: evita que mês e número se sobreponham. */
+.date-stack span {
+  line-height: .82;
+  padding-bottom: .08em;
+}
+
+.date-stack em {
+  margin: .3rem 0 0 .3em;
+}
+
+.date-stack small {
+  display: block;
+  margin-top: .6rem;
+}
+
+.date-stack.small em {
+  margin: 0;
+}

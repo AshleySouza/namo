@@ -1,0 +1,29 @@
+.reunion-section {
+  min-height: 90vh;
+  align-items: center;
+  background: radial-gradient(ellipse at 50% 45%, #4b1c2b 0%, #1a0a11 55%, #10070b 100%);
+}
+
+.reunion-card {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 5rem);
+  text-align: center;
+  border: 1px solid #c8a36a40;
+  background: linear-gradient(135deg, #ffffff08, #ffffff02);
+  box-shadow: 0 24px 70px #0005;
+}
+
+.reunion-card h2 {
+  margin: 1rem 0 2rem;
+  font: 500 clamp(2rem, 4.5vw, 4rem)/1.15 'Playfair Display', serif;
+}
+
+.reunion-card p:not(.eyebrow) {
+  margin: 1.5rem auto;
+  max-width: 570px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.reunion-line { width: 55px; height: 1px; background: var(--gold); margin: 0 auto 2.5rem; }

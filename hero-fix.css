@@ -1,0 +1,14 @@
+/* Mantém o convite de rolagem afastado do botão de abertura. */
+.hero-inner {
+  padding-bottom: 4.5rem;
+}
+
+@media (max-height: 560px) {
+  .scroll-hint {
+    display: none;
+  }
+
+  .hero-inner {
+    padding-bottom: 0;
+  }
+}

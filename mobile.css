@@ -1,0 +1,83 @@
+/* Ajustes mobile-first para a experiência continuar confortável em qualquer tela. */
+@media (max-width: 700px) {
+  body { min-width: 320px; }
+
+  .section { min-height: auto; padding: 5.5rem 22px; }
+  .full-screen { min-height: 100svh; padding: 28px 22px; }
+  .hero-inner { padding-bottom: 3.5rem; }
+  .hero h1 { font-size: clamp(2rem, 9vw, 3rem); }
+  .hero p:not(.eyebrow) { font-size: 1rem; margin-bottom: 2rem; }
+  .start-button { display: inline-flex; justify-content: center; align-items: center; min-height: 52px; padding: 1rem 1.2rem; }
+  .scroll-hint { bottom: 16px; }
+
+  .date-stack { margin-bottom: 2.7rem; }
+  .date-stack span { font-size: clamp(7.2rem, 42vw, 10rem); line-height: .86; }
+  .date-stack em { font-size: 1.05rem; letter-spacing: .22em; }
+  .copy p { margin: 2rem 0; }
+  .copy h2, .section-title, .music-section h2 { margin: 2.2rem 0; font-size: clamp(1.9rem, 8vw, 2.6rem); }
+
+  .reunion-section { padding: 4.8rem 18px; }
+  .reunion-card { padding: 2.4rem 1.5rem; }
+  .reunion-card h2 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+
+  .gift-section { padding-top: 4.5rem; }
+  .gift-wrap { min-height: 240px; }
+  .gift-box { transform: scale(.82) perspective(500px) rotateX(-4deg); }
+  .date-stack.small { text-align: center; }
+  .date-stack.small span { font-size: 6.2rem; }
+
+  .timeline { margin-top: 2.7rem; }
+  .timeline-item { padding: 0 0 3rem 38px; }
+  .timeline-item h3 { font-size: 1.32rem; }
+  .timeline-item p { font-size: .95rem; }
+
+  .gallery-section { padding-left: 0; padding-right: 0; overflow: hidden; }
+  .gallery-section > .eyebrow, .gallery-section > .section-title, .gallery-note { margin-left: 22px; margin-right: 22px; }
+  .gallery { display: flex; width: 100%; overflow-x: auto; gap: 18px; padding: 8px 22px 28px; margin: 1.8rem 0 0; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .gallery::-webkit-scrollbar { display: none; }
+  .photo, .photo:nth-child(2n), .photo:nth-child(3n) { flex: 0 0 min(76vw, 290px); transform: rotate(-1.5deg); scroll-snap-align: center; }
+  .photo:nth-child(even) { transform: translateY(12px) rotate(1.5deg); }
+  .photo:hover { transform: none; }
+  .gallery-note { font-size: .76rem; }
+
+  .realization { min-height: 100svh; }
+  .counter { gap: .4rem; margin: 2.8rem 0; }
+  .counter b { font-size: clamp(1.7rem, 9vw, 2.35rem); }
+  .counter span { font-size: .45rem; letter-spacing: .05em; }
+
+  .letter-section { padding: 4rem 16px; }
+  .letter { padding: 3.2rem 1.7rem; }
+  .letter p { font-size: .95rem; }
+  .letter h2 { font-size: 2rem; }
+  .spotify-player { width: 100%; }
+
+  .proposal-section { min-height: 100svh; padding: 5rem 18px; align-items: center; }
+  .proposal-line { margin: 1.25rem 0; }
+  .proposal-inner h2 { font-size: clamp(1.75rem, 8vw, 2.4rem); margin: 2.7rem 0; }
+  .question { font-size: clamp(2.4rem, 12vw, 4rem); margin-bottom: 2.2rem; }
+  .choices { min-height: 60px; }
+  .choices button { min-height: 54px; padding: 1rem 1.35rem; }
+  .yes { min-width: 130px; }
+  .no { touch-action: none; }
+  .no-message { margin-top: 1.2rem; padding: 0 12px; }
+
+  .modal { padding: 20px; }
+  .modal img { max-width: 94vw; max-height: 68vh; }
+  .modal-close { top: 8px; right: 20px; }
+  .celebration { padding: 8vh 20px; }
+  .celebration h1 { font-size: clamp(3.1rem, 15vw, 5rem); }
+  .final-line { margin-top: 3.5rem; padding-top: 3rem; }
+}
+
+@media (max-width: 370px) {
+  .section { padding-left: 18px; padding-right: 18px; }
+  .counter b { font-size: 1.55rem; }
+  .counter span { font-size: .4rem; }
+  .yes { min-width: 118px; }
+  .choices button { padding-left: 1rem; padding-right: 1rem; }
+}
+
+@media (max-height: 650px) and (max-width: 700px) {
+  .scroll-hint { display: none; }
+  .hero-inner { padding-bottom: 0; }
+}

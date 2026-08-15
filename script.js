@@ -1,0 +1,64 @@
+/* ── PERSONALIZE AQUI ────────────────────────────────────────────── */
+const configuracao = {
+  meuNome: 'Ashley', nomeDela: 'Samira', dataInicio: '2026-03-28T00:00:00', dataReencontro: '2026-04-19', dataPresente: '2026-07-14',
+  // Ex.: musica: 'assets/nossa-musica.mp3'. Deixe vazio enquanto não tiver um arquivo.
+  musica: '',
+  spotifyEmbed: 'https://open.spotify.com/embed/track/1T3hcBQRwacjWLuJJFt8co?utm_source=generator',
+  dedicatória: 'Você aperta a minha mente, mas eu te amo e não vivo sem você.',
+  // Use caminhos locais, por exemplo: 'assets/foto-1.jpg'.
+  fotos: ['assets/momento-1.jpeg', 'assets/momento-2.jpeg', 'assets/momento-3.jpeg', 'assets/momento-4.jpeg', 'assets/momento-5.jpeg'],
+  legendas: ['Uma lembrança que eu guardaria mil vezes.', 'Eu gosto desse momento porque você está nele.', 'Mais um pedacinho da nossa história.', 'Eu espero que a gente tenha muitos momentos assim.', 'Uma vista que eu jamais vou esquecer.'],
+  carta: `Samira,
+
+eu não sei se consigo colocar tudo o que sinto em palavras.
+
+A gente voltou a se falar no dia 28 de março.
+E eu não sabia que aquela conversa poderia significar tanto.
+
+Também não sei exatamente em que momento as coisas começaram a mudar.
+Só sei que, olhando para trás, percebo que foi uma das melhores escolhas que eu poderia ter feito.
+
+E então vieram os pequenos momentos.
+As conversas.
+As risadas.
+As lembranças.
+
+Até aquele presente que você me deu no dia 14 de julho.
+Talvez você nem imagine o quanto pequenas coisas podem significar quando vêm de alguém especial.
+
+E foi aí que eu percebi que não queria que nossa história parasse por aqui.
+
+Eu quero viver mais momentos.
+Quero criar novas lembranças.
+Quero ter mais histórias para contar.
+
+E, principalmente...
+
+quero continuar tendo você na minha vida.`
+};
+
+document.querySelectorAll('[data-name="ela"]').forEach(el => el.textContent = configuracao.nomeDela + (el.textContent.includes('...') ? '...' : ''));
+document.querySelectorAll('[data-name="meu"]').forEach(el => el.textContent = configuracao.meuNome);
+document.getElementById('letter-text').innerHTML = configuracao.carta.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+const gallery = document.getElementById('gallery'), modal = document.getElementById('photo-modal');
+configuracao.fotos.forEach((src, index) => { const card = document.createElement('article'); card.className = 'photo'; const image = document.createElement('div'); image.className = 'photo-image' + (src ? ' has-image' : ''); if(src) image.style.backgroundImage = `url("${src}")`; else image.textContent = `foto ${index + 1}`; card.append(image, Object.assign(document.createElement('p'), {textContent: configuracao.legendas[index] || 'Uma lembrança nossa.'})); card.onclick = () => { if(!src) return; document.getElementById('modal-image').src = src; document.getElementById('modal-image').alt = configuracao.legendas[index]; document.getElementById('modal-caption').textContent = configuracao.legendas[index]; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }; gallery.appendChild(card); });
+document.querySelector('.modal-close').onclick = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); };
+modal.onclick = e => { if(e.target === modal) document.querySelector('.modal-close').click(); };
+
+const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }}), {threshold:.16}); document.querySelectorAll('.reveal').forEach(el => { if(!el.classList.contains('visible')) observer.observe(el); });
+
+const audio = document.getElementById('audio'), musicButton = document.getElementById('music-toggle'), label = document.getElementById('music-label'), musicStatus = document.getElementById('music-status'), spotifyEmbed = document.getElementById('spotify-embed');
+if(configuracao.spotifyEmbed){ spotifyEmbed.src = configuracao.spotifyEmbed; spotifyEmbed.title = 'Ela Aperta a Minha Mente'; musicButton.style.display = 'none'; musicStatus.textContent = configuracao.dedicatória; }
+if(configuracao.musica){ audio.src = configuracao.musica; musicStatus.textContent = 'Uma música escolhida especialmente para você.'; }
+musicButton.onclick = async () => { if(!audio.src) { musicStatus.textContent = 'Adicione o caminho da música em “musica” no começo do script.js.'; return; } if(audio.paused) { await audio.play(); label.textContent = 'PAUSE'; musicButton.querySelector('.play-icon').textContent = '❚❚'; } else audio.pause(); };
+audio.onpause = () => { label.textContent = 'PLAY'; musicButton.querySelector('.play-icon').textContent = '▶'; }; audio.onplay = () => { label.textContent = 'PAUSE'; musicButton.querySelector('.play-icon').textContent = '❚❚'; };
+
+function tick(){ const d = Math.max(0, Date.now() - new Date(configuracao.dataInicio).getTime()); const s = Math.floor(d/1000); [['days',Math.floor(s/86400)],['hours',Math.floor(s%86400/3600)],['minutes',Math.floor(s%3600/60)],['seconds',s%60]].forEach(([id,v])=>document.getElementById(id).textContent=String(v).padStart(2,'0')); } tick(); setInterval(tick,1000);
+
+const no = document.getElementById('no'), yes = document.getElementById('yes'), noMessage = document.getElementById('no-message'), choices = document.getElementById('choices'); let attempts = 0;
+const messages = ['Tem certeza? 👀','Você quase conseguiu! 😂','Esse botão não vale!','Olha o SIM ali... ♥','Não foge de mim também 🥺','Eu acho que você sabe a resposta.'];
+function runAway(e){ e.preventDefault(); attempts++; const container = choices.getBoundingClientRect(), yesBox = yes.getBoundingClientRect(); const maxX = Math.max(80, window.innerWidth - no.offsetWidth - 24), maxY = Math.max(90, window.innerHeight - no.offsetHeight - 24); let x,y,tries=0; do {x = 12 + Math.random()*maxX; y = 12 + Math.random()*maxY; tries++;} while(tries<20 && x+no.offsetWidth>yesBox.left-20 && x<yesBox.right+20 && y+no.offsetHeight>yesBox.top-20 && y<yesBox.bottom+20); no.style.position='fixed'; no.style.left=x+'px'; no.style.top=y+'px'; no.style.zIndex=10; noMessage.textContent = attempts >= 5 ? 'Desistiu? 😌♥' : (attempts >= 7 ? 'Samira, você realmente está tentando? 😂♥' : messages[(attempts-1)%messages.length]); }
+no.addEventListener('pointerdown',runAway); no.addEventListener('mouseenter', e => { if(e.pointerType !== 'touch') runAway(e); });
+window.addEventListener('resize', () => { no.style.position = ''; no.style.left = ''; no.style.top = ''; });
+yes.onclick = async () => { if(audio.src && audio.paused) { try { await audio.play(); } catch {} } document.getElementById('celebration').classList.add('active'); for(let i=0;i<110;i++){const p=document.createElement('i');p.className='piece';p.style.left=Math.random()*100+'%';p.style.animationDelay=Math.random()*1.8+'s';p.style.setProperty('--x',(Math.random()-.5)*280+'px');p.style.background=['#c8a36a','#e87986','#f5e8c9'][i%3];document.getElementById('confetti').appendChild(p);} };
