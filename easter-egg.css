@@ -1,0 +1,50 @@
+.secret-easter { display: none; }
+
+.celebration.active + .secret-easter { display: block; }
+
+.secret-trigger {
+  position: fixed;
+  z-index: 55;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: .75rem 1rem;
+  border: 0;
+  border-bottom: 1px solid #c8a36a88;
+  background: #16090dcc;
+  color: var(--cream);
+  cursor: pointer;
+  font: italic 1rem 'Playfair Display', serif;
+  transition: .25s;
+}
+
+.secret-trigger:hover { color: var(--gold); }
+.secret-trigger span, .secret-letter h2 span { color: #e77a83; }
+
+.secret-letter {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 24px;
+  background: #0b0509ed;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s ease;
+}
+
+.secret-easter.letter-visible .secret-letter { opacity: 1; pointer-events: auto; }
+
+.secret-letter > :not(.secret-close) { width: min(100%, 650px); }
+.secret-letter h2 { margin: 1rem 0 2rem; font: 500 clamp(2rem, 4vw, 3.5rem)/1.18 'Playfair Display', serif; text-align: center; }
+.secret-letter p:not(.eyebrow) { max-width: 580px; margin: .7rem 0; color: var(--muted); text-align: center; line-height: 1.8; }
+.secret-letter .secret-signature { margin-top: 2rem; color: var(--cream); font: italic 1.3rem 'Playfair Display', serif; }
+.secret-close { position: absolute; top: 18px; right: 28px; border: 0; background: none; color: var(--cream); cursor: pointer; font-size: 2.5rem; }
+
+@media (max-width: 700px) {
+  .secret-trigger { bottom: 16px; white-space: nowrap; }
+  .secret-letter { padding: 30px 22px; }
+  .secret-letter h2 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+}

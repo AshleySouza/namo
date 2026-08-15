@@ -1,0 +1,16 @@
+/* O convite da carta fica depois da mensagem final, sem cobrir o conteúdo. */
+.celebration.active .secret-easter {
+  display: block;
+  margin: 3.5rem auto 1rem;
+  text-align: center;
+}
+
+.secret-trigger {
+  position: static;
+  transform: none;
+  display: inline-block;
+}
+
+@media (max-width: 700px) {
+  .celebration.active .secret-easter { margin-top: 2.5rem; }
+}

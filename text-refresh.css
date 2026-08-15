@@ -1,0 +1,37 @@
+/* Novos capítulos: mais diretos, quentes e com espaço para cada frase respirar. */
+.you-section {
+  min-height: 125vh;
+  background: radial-gradient(ellipse at 50% 42%, #552135 0%, #1a0911 52%, #090405 100%);
+}
+
+.you-answer, .love-answer {
+  margin: 2.8rem 0 4.5rem;
+  color: var(--gold);
+  font: 600 clamp(4rem, 12vw, 9rem)/.9 'Playfair Display', serif;
+  text-shadow: 0 0 50px #d39c5c45;
+}
+
+.you-section .copy > p:not(.eyebrow), .love-section .copy > p:not(.eyebrow) { margin: 3.2rem 0; }
+
+.love-section {
+  min-height: 105vh;
+  background: radial-gradient(ellipse at 48% 45%, #4b1729, #110609 68%);
+}
+
+.love-answer { color: var(--cream); font-size: clamp(3.6rem, 10vw, 7rem); }
+
+.pre-proposal {
+  min-height: 90vh;
+  text-align: center;
+  background: radial-gradient(ellipse at center, #2a0c18, #080405 70%);
+}
+
+.pre-proposal .copy > p { margin: 3rem 0; color: var(--muted); font: italic clamp(1.35rem, 3vw, 2rem) 'Playfair Display', serif; }
+.pre-proposal .copy h2 { margin-top: 4rem; }
+
+@media (max-width: 700px) {
+  .you-section, .love-section { min-height: 100svh; }
+  .you-answer, .love-answer { margin: 2.2rem 0 3.5rem; }
+  .you-section .copy > p:not(.eyebrow), .love-section .copy > p:not(.eyebrow) { margin: 2.3rem 0; }
+  .pre-proposal { min-height: 85svh; }
+}

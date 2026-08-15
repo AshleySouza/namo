@@ -8,33 +8,38 @@ const configuracao = {
   // Use caminhos locais, por exemplo: 'assets/foto-1.jpg'.
   fotos: ['assets/momento-1.jpeg', 'assets/momento-2.jpeg', 'assets/momento-3.jpeg', 'assets/momento-4.jpeg', 'assets/momento-5.jpeg'],
   legendas: ['Uma lembrança que eu guardaria mil vezes.', 'Eu gosto desse momento porque você está nele.', 'Mais um pedacinho da nossa história.', 'Eu espero que a gente tenha muitos momentos assim.', 'Uma vista que eu jamais vou esquecer.'],
-  carta: `Samira,
+  carta: `Eu fiquei pensando em como escrever isso sem transformar tudo em um texto enorme.
 
-eu não sei se consigo colocar tudo o que sinto em palavras.
+Então acho que vou simplesmente falar o que sinto.
 
-A gente voltou a se falar no dia 28 de março.
-E eu não sabia que aquela conversa poderia significar tanto.
+Eu amo você.
 
-Também não sei exatamente em que momento as coisas começaram a mudar.
-Só sei que, olhando para trás, percebo que foi uma das melhores escolhas que eu poderia ter feito.
+Eu amo seu jeito, seu sorriso, seu cheiro, sua presença.
 
-E então vieram os pequenos momentos.
-As conversas.
-As risadas.
-As lembranças.
+Você é linda, mas é muito mais do que isso.
 
-Até aquele presente que você me deu no dia 14 de julho.
-Talvez você nem imagine o quanto pequenas coisas podem significar quando vêm de alguém especial.
+Tem alguma coisa em você que eu não encontro em mais ninguém.
 
-E foi aí que eu percebi que não queria que nossa história parasse por aqui.
+Eu nunca imaginei que encontraria um amor assim. Principalmente no meio de todo esse caos.
 
-Eu quero viver mais momentos.
-Quero criar novas lembranças.
-Quero ter mais histórias para contar.
+Eu não esperava encontrar alguém que me fizesse sentir tudo isso. Mas encontrei.
 
-E, principalmente...
+E foi você.
 
-quero continuar tendo você na minha vida.`
+Desde que você voltou para a minha vida, algumas coisas simplesmente parecem melhores.
+
+Eu gosto de falar com você. Eu gosto de estar perto de você. Eu gosto de pensar em você.
+
+E gosto ainda mais da ideia de continuar descobrindo quem você é.
+
+Eu não sei exatamente o que o futuro vai trazer.
+
+Mas sei quem eu gostaria de ter ao meu lado enquanto ele acontece.
+
+Você.
+
+Com amor,
+Ashley ♥`
 };
 
 document.querySelectorAll('[data-name="ela"]').forEach(el => el.textContent = configuracao.nomeDela + (el.textContent.includes('...') ? '...' : ''));
