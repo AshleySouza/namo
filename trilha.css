@@ -1,0 +1,18 @@
+.trilha-control {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 45;
+  border: 1px solid #c8a36a99;
+  border-radius: 999px;
+  background: #210b15e8;
+  color: #f8eee5;
+  padding: .8rem 1rem;
+  font: 600 .62rem 'DM Sans', sans-serif;
+  letter-spacing: .1em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px #0006;
+}
+
+.trilha-control span { color: #e47a85; font-size: 1rem; margin-right: .35rem; }
+.trilha-control.ativa { background: #7c1e35; color: #fff; }

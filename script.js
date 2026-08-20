@@ -53,14 +53,14 @@ modal.onclick = e => { if(e.target === modal) document.querySelector('.modal-clo
 
 const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }}), {threshold:.16}); document.querySelectorAll('.reveal').forEach(el => { if(!el.classList.contains('visible')) observer.observe(el); });
 
-const audio = document.getElementById('audio'), musicButton = document.getElementById('music-toggle'), label = document.getElementById('music-label'), musicStatus = document.getElementById('music-status');
+const audio = document.getElementById('audio'), musicButton = document.getElementById('music-toggle'), label = document.getElementById('music-label'), musicStatus = document.getElementById('music-status'), trilhaButton = document.getElementById('trilha-control');
 let trilhaContext, trilhaAtiva = false, trilhaTimer, trilhaIndex = 0;
 const notasTrilha = [[261.63,.9],[329.63,.7],[392,.9],[523.25,1.1],[440,.8],[349.23,.8],[293.66,1],[392,.9]];
-function tocarNotaTrilha([frequencia, duracao]) { const agora = trilhaContext.currentTime, nota = trilhaContext.createOscillator(), volume = trilhaContext.createGain(); nota.type = 'sine'; nota.frequency.setValueAtTime(frequencia, agora); volume.gain.setValueAtTime(.0001, agora); volume.gain.exponentialRampToValueAtTime(.035, agora + .04); volume.gain.exponentialRampToValueAtTime(.0001, agora + duracao); nota.connect(volume).connect(trilhaContext.destination); nota.start(agora); nota.stop(agora + duracao + .05); }
+function tocarNotaTrilha([frequencia, duracao]) { const agora = trilhaContext.currentTime, nota = trilhaContext.createOscillator(), volume = trilhaContext.createGain(); nota.type = 'triangle'; nota.frequency.setValueAtTime(frequencia, agora); volume.gain.setValueAtTime(.0001, agora); volume.gain.exponentialRampToValueAtTime(.09, agora + .04); volume.gain.exponentialRampToValueAtTime(.0001, agora + duracao); nota.connect(volume).connect(trilhaContext.destination); nota.start(agora); nota.stop(agora + duracao + .05); }
 function tocarTrilha() { if (!trilhaAtiva) return; tocarNotaTrilha(notasTrilha[trilhaIndex++ % notasTrilha.length]); trilhaTimer = window.setTimeout(tocarTrilha, 820); }
-async function iniciarTrilha() { if (!trilhaContext) trilhaContext = new (window.AudioContext || window.webkitAudioContext)(); if (trilhaContext.state === 'suspended') await trilhaContext.resume(); if (!trilhaAtiva) { trilhaAtiva = true; tocarTrilha(); } }
-function pararTrilha() { trilhaAtiva = false; window.clearTimeout(trilhaTimer); }
-document.addEventListener('pointerdown', iniciarTrilha, { once: true });
+async function iniciarTrilha() { if (!trilhaContext) trilhaContext = new (window.AudioContext || window.webkitAudioContext)(); if (trilhaContext.state === 'suspended') await trilhaContext.resume(); if (!trilhaAtiva) { trilhaAtiva = true; tocarTrilha(); } trilhaButton.classList.add('ativa'); trilhaButton.setAttribute('aria-pressed', 'true'); trilhaButton.innerHTML = '<span>♫</span> PAUSAR TRILHA'; }
+function pararTrilha() { trilhaAtiva = false; window.clearTimeout(trilhaTimer); trilhaButton.classList.remove('ativa'); trilhaButton.setAttribute('aria-pressed', 'false'); trilhaButton.innerHTML = '<span>♫</span> ATIVAR TRILHA'; }
+trilhaButton.onclick = () => { if (trilhaAtiva) pararTrilha(); else iniciarTrilha(); };
 
 if(configuracao.spotifyEmbed){ musicButton.style.display = 'none'; musicStatus.textContent = configuracao.dedicatória; }
 if(configuracao.musica){ audio.src = configuracao.musica; musicStatus.textContent = 'Uma música escolhida especialmente para você.'; }
