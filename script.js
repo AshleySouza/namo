@@ -55,9 +55,13 @@ const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e
 
 const audio = document.getElementById('audio'), musicButton = document.getElementById('music-toggle'), label = document.getElementById('music-label'), musicStatus = document.getElementById('music-status');
 let trilhaContext, trilhaAtiva = false, trilhaTimer, trilhaIndex = 0;
-const notasTrilha = [[261.63,.9],[329.63,.7],[392,.9],[523.25,1.1],[440,.8],[349.23,.8],[293.66,1],[392,.9]];
-function tocarNotaTrilha([frequencia, duracao]) { const agora = trilhaContext.currentTime, nota = trilhaContext.createOscillator(), volume = trilhaContext.createGain(); nota.type = 'triangle'; nota.frequency.setValueAtTime(frequencia, agora); volume.gain.setValueAtTime(.0001, agora); volume.gain.exponentialRampToValueAtTime(.15, agora + .04); volume.gain.exponentialRampToValueAtTime(.0001, agora + duracao); nota.connect(volume).connect(trilhaContext.destination); nota.start(agora); nota.stop(agora + duracao + .05); }
-function tocarTrilha() { if (!trilhaAtiva) return; tocarNotaTrilha(notasTrilha[trilhaIndex++ % notasTrilha.length]); trilhaTimer = window.setTimeout(tocarTrilha, 820); }
+const notasTrilha = [
+  [[261.63, 329.63, 392], 1.4], [[293.66, 349.23, 440], 1.4],
+  [[329.63, 392, 493.88], 1.7], [[293.66, 369.99, 440], 1.4],
+  [[261.63, 329.63, 392], 1.4], [[220, 329.63, 392], 1.7]
+];
+function tocarNotaTrilha([frequencias, duracao]) { const agora = trilhaContext.currentTime; frequencias.forEach((frequencia, indice) => { const nota = trilhaContext.createOscillator(), volume = trilhaContext.createGain(); nota.type = indice === 0 ? 'sine' : 'triangle'; nota.frequency.setValueAtTime(frequencia, agora); volume.gain.setValueAtTime(.0001, agora); volume.gain.exponentialRampToValueAtTime(indice === 0 ? .075 : .04, agora + .12); volume.gain.exponentialRampToValueAtTime(.0001, agora + duracao); nota.connect(volume).connect(trilhaContext.destination); nota.start(agora); nota.stop(agora + duracao + .08); }); }
+function tocarTrilha() { if (!trilhaAtiva) return; tocarNotaTrilha(notasTrilha[trilhaIndex++ % notasTrilha.length]); trilhaTimer = window.setTimeout(tocarTrilha, 1280); }
 async function iniciarTrilha() { if (!trilhaContext) trilhaContext = new (window.AudioContext || window.webkitAudioContext)(); if (trilhaContext.state === 'suspended') await trilhaContext.resume(); if (!trilhaAtiva) { trilhaAtiva = true; tocarTrilha(); } }
 function pararTrilha() { trilhaAtiva = false; window.clearTimeout(trilhaTimer); }
 document.addEventListener('pointerdown', iniciarTrilha, { once: true });
