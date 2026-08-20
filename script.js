@@ -53,11 +53,20 @@ modal.onclick = e => { if(e.target === modal) document.querySelector('.modal-clo
 
 const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }}), {threshold:.16}); document.querySelectorAll('.reveal').forEach(el => { if(!el.classList.contains('visible')) observer.observe(el); });
 
-const audio = document.getElementById('audio'), musicButton = document.getElementById('music-toggle'), label = document.getElementById('music-label'), musicStatus = document.getElementById('music-status'), spotifyEmbed = document.getElementById('spotify-embed');
-if(configuracao.spotifyEmbed){ spotifyEmbed.src = configuracao.spotifyEmbed; spotifyEmbed.title = 'Ela Aperta a Minha Mente'; musicButton.style.display = 'none'; musicStatus.textContent = configuracao.dedicatória; }
+const audio = document.getElementById('audio'), musicButton = document.getElementById('music-toggle'), label = document.getElementById('music-label'), musicStatus = document.getElementById('music-status');
+let trilhaContext, trilhaAtiva = false, trilhaTimer, trilhaIndex = 0;
+const notasTrilha = [[261.63,.9],[329.63,.7],[392,.9],[523.25,1.1],[440,.8],[349.23,.8],[293.66,1],[392,.9]];
+function tocarNotaTrilha([frequencia, duracao]) { const agora = trilhaContext.currentTime, nota = trilhaContext.createOscillator(), volume = trilhaContext.createGain(); nota.type = 'sine'; nota.frequency.setValueAtTime(frequencia, agora); volume.gain.setValueAtTime(.0001, agora); volume.gain.exponentialRampToValueAtTime(.035, agora + .04); volume.gain.exponentialRampToValueAtTime(.0001, agora + duracao); nota.connect(volume).connect(trilhaContext.destination); nota.start(agora); nota.stop(agora + duracao + .05); }
+function tocarTrilha() { if (!trilhaAtiva) return; tocarNotaTrilha(notasTrilha[trilhaIndex++ % notasTrilha.length]); trilhaTimer = window.setTimeout(tocarTrilha, 820); }
+async function iniciarTrilha() { if (!trilhaContext) trilhaContext = new (window.AudioContext || window.webkitAudioContext)(); if (trilhaContext.state === 'suspended') await trilhaContext.resume(); if (!trilhaAtiva) { trilhaAtiva = true; tocarTrilha(); } }
+function pararTrilha() { trilhaAtiva = false; window.clearTimeout(trilhaTimer); }
+document.addEventListener('pointerdown', iniciarTrilha, { once: true });
+
+if(configuracao.spotifyEmbed){ musicButton.style.display = 'none'; musicStatus.textContent = configuracao.dedicatória; }
 if(configuracao.musica){ audio.src = configuracao.musica; musicStatus.textContent = 'Uma música escolhida especialmente para você.'; }
-musicButton.onclick = async () => { if(!audio.src) { musicStatus.textContent = 'Adicione o caminho da música em “musica” no começo do script.js.'; return; } if(audio.paused) { await audio.play(); label.textContent = 'PAUSE'; musicButton.querySelector('.play-icon').textContent = '❚❚'; } else audio.pause(); };
-audio.onpause = () => { label.textContent = 'PLAY'; musicButton.querySelector('.play-icon').textContent = '▶'; }; audio.onplay = () => { label.textContent = 'PAUSE'; musicButton.querySelector('.play-icon').textContent = '❚❚'; };
+musicButton.onclick = async () => { if(!audio.src) { musicStatus.textContent = 'Adicione o caminho da música em “musica” no começo do script.js.'; return; } if(audio.paused) { pararTrilha(); await audio.play(); label.textContent = 'PAUSE'; musicButton.querySelector('.play-icon').textContent = '❚❚'; } else audio.pause(); };
+audio.onpause = () => { label.textContent = 'PLAY'; musicButton.querySelector('.play-icon').textContent = '▶'; }; audio.onplay = () => { pararTrilha(); label.textContent = 'PAUSE'; musicButton.querySelector('.play-icon').textContent = '❚❚'; };
+window.onSpotifyIframeApiReady = IFrameAPI => { const url = configuracao.spotifyEmbed; if (!url) return; const uri = url.replace('https://open.spotify.com/embed/track/', 'spotify:track:').split('?')[0]; IFrameAPI.createController(document.getElementById('spotify-embed'), { width: '100%', height: 152, uri }, controller => controller.addListener('playback_update', event => { if (!event.data.isPaused) pararTrilha(); })); };
 
 function tick(){ const d = Math.max(0, Date.now() - new Date(configuracao.dataInicio).getTime()); const s = Math.floor(d/1000); [['days',Math.floor(s/86400)],['hours',Math.floor(s%86400/3600)],['minutes',Math.floor(s%3600/60)],['seconds',s%60]].forEach(([id,v])=>document.getElementById(id).textContent=String(v).padStart(2,'0')); } tick(); setInterval(tick,1000);
 
